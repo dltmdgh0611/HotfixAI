@@ -185,8 +185,8 @@ export default function Home() {
               lineHeight: '1.6',
               marginBottom: '24px'
             }}>
-              "상단 배너 색상을 파란색으로 바꿔줘"<br/>
-              "모바일에서 버튼 크기를 키워줘"<br/><br/>
+              &quot;상단 배너 색상을 파란색으로 바꿔줘&quot;<br/>
+              &quot;모바일에서 버튼 크기를 키워줘&quot;<br/><br/>
               이렇게 말하면 AI가 자동으로 코드를 수정합니다.
             </p>
             <button

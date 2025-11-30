@@ -5,6 +5,14 @@ const nextConfig = {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+  },
   experimental: {
     // Allow native/binary deps to be loaded at runtime in server routes
     serverComponentsExternalPackages: ['ssh2-sftp-client', 'ssh2', 'basic-ftp'],

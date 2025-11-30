@@ -32,7 +32,7 @@ export default function FileTree({
       }
     }
     setExpanded(new Set(Array.from(level1)))
-  }, [files.join('|')])
+  }, [files])
 
   const tree = useMemo(() => {
     const root: TreeNode = { name: '', path: '', isFile: false, children: [] }
@@ -67,7 +67,7 @@ export default function FileTree({
     }
     sortNodes(root)
     return root
-  }, [files.join('|')])
+  }, [files])
 
   const getFileIcon = (filename: string): string => {
     const ext = filename.split('.').pop()?.toLowerCase()

@@ -64,7 +64,7 @@ export default function ChatPanel({
       ])
       localStorage.removeItem('initialMessage')
     }
-  }, [])
+  }, [messages.length])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -208,29 +208,18 @@ sentFiles: ${sentFiles.join(', ')}
       parts.push(`- ID: #${element.id}`)
     }
     
-    if (element.className) {
-      parts.push(`- 클래스: ${element.className}`)
+    if (element.classNames && element.classNames.length > 0) {
+      parts.push(`- 클래스: ${element.classNames.join(' ')}`)
     }
     
-    if (element.innerText && element.innerText.trim()) {
-      parts.push(`- 텍스트: "${element.innerText.trim()}"`)
+    if (element.textContent && element.textContent.trim()) {
+      parts.push(`- 텍스트: "${element.textContent.trim()}"`)
     }
     
     parts.push(`- CSS 선택자: ${element.selector}`)
     
     if (element.sourceFile) {
       parts.push(`- 파일: ${element.sourceFile}`)
-    }
-    
-    if (element.approximateLine) {
-      parts.push(`- 코드 위치: 약 ${element.approximateLine}줄 근처`)
-    }
-    
-    if (element.outerHTML) {
-      const preview = element.outerHTML.length > 200 
-        ? element.outerHTML.substring(0, 200) + '...' 
-        : element.outerHTML
-      parts.push(`- HTML 미리보기:\n${preview}`)
     }
     
     return parts.join('\n')
@@ -373,24 +362,26 @@ sentFiles: ${sentFiles.join(', ')}
                 )}
               </div>
               
-              {selectedElement.className && (
+              {selectedElement.classNames && selectedElement.classNames.length > 0 && (
                 <div>
                   <span style={{ fontWeight: 600 }}>클래스:</span>{' '}
-                  <span style={{ fontSize: '12px' }}>{selectedElement.className}</span>
+                  <span style={{ fontSize: '12px' }}>{selectedElement.classNames.join(' ')}</span>
                 </div>
               )}
               
-              {selectedElement.innerText && (
+              {selectedElement.textContent && (
                 <div>
                   <span style={{ fontWeight: 600 }}>텍스트:</span>{' '}
-                  <span style={{ fontSize: '12px' }}>"{selectedElement.innerText.substring(0, 50)}{selectedElement.innerText.length > 50 ? '...' : ''}"</span>
+                  <span style={{ fontSize: '12px' }}>&quot;{selectedElement.textContent.substring(0, 50)}{selectedElement.textContent.length > 50 ? '...' : ''}&quot;</span>
                 </div>
               )}
               
-              <div>
-                <span style={{ fontWeight: 600 }}>위치:</span>{' '}
-                <span style={{ fontSize: '12px' }}>{selectedElement.sourceFile} (약 {selectedElement.approximateLine}줄)</span>
-              </div>
+              {selectedElement.sourceFile && (
+                <div>
+                  <span style={{ fontWeight: 600 }}>위치:</span>{' '}
+                  <span style={{ fontSize: '12px' }}>{selectedElement.sourceFile}</span>
+                </div>
+              )}
             </div>
           </div>
         )}

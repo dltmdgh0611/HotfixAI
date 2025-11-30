@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession, signOut } from 'next-auth/react'
+import Image from 'next/image'
 import { FiTool, FiUser, FiLogOut, FiTrash2 } from 'react-icons/fi'
 
 export function Header() {
@@ -83,10 +84,13 @@ export function Header() {
               }}
             >
               {session.user.image ? (
-                <img 
+                <Image 
                   src={session.user.image} 
                   alt="Profile"
-                  style={{ width: 24, height: 24, borderRadius: '50%' }}
+                  width={24}
+                  height={24}
+                  style={{ borderRadius: '50%' }}
+                  unoptimized
                 />
               ) : (
                 <FiUser size={20} />
