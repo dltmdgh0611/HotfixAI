@@ -27,7 +27,7 @@ export function Header() {
       })
 
       if (res.ok) {
-        await authService.signOut()
+        await signOut({ callbackUrl: '/auth/login' })
         alert('계정이 삭제되었습니다.')
         router.push('/auth/login')
       } else {

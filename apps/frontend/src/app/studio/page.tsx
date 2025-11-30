@@ -231,9 +231,7 @@ export default function StudioPage() {
         {/* Center: Preview */}
         <div className="studio-panel studio-panel-center">
           <WebviewPreview 
-            src={previewUrl} 
-            sourceFile={selectedHtml}
-            onElementSelect={setSelectedElement}
+            src={previewUrl}
           />
         </div>
 

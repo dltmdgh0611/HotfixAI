@@ -1,13 +1,14 @@
 /**
  * Next.js 미들웨어
  * 세션 관리 및 인증 체크
+ * NextAuth를 사용하므로 별도의 세션 업데이트는 필요 없습니다.
  */
-import { updateSession } from '@/lib/supabase/middleware'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request)
+  // NextAuth가 자동으로 세션을 관리하므로 여기서는 단순히 요청을 통과시킵니다.
+  return NextResponse.next()
 }
 
 export const config = {

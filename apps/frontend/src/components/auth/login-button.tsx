@@ -5,7 +5,7 @@
 'use client'
 
 import { useState } from 'react'
-import { authService } from '@/lib/auth/auth-service'
+import { signIn } from 'next-auth/react'
 import { AuthProvider } from '@/types/auth'
 
 interface LoginButtonProps {
@@ -23,13 +23,18 @@ export function LoginButton({ provider, children, className = '' }: LoginButtonP
     setError(null)
 
     try {
-      const { error } = await authService.signInWithOAuth(provider)
-      if (error) {
-        setError(error.message)
+      if (provider === 'naver') {
+        setError('네이버 로그인은 준비 중입니다. 구글 로그인을 이용해주세요.')
+        setLoading(false)
+        return
       }
+      
+      await signIn(provider, { 
+        callbackUrl: '/start',
+        redirect: true 
+      })
     } catch (err) {
       setError('로그인 중 오류가 발생했습니다.')
-    } finally {
       setLoading(false)
     }
   }

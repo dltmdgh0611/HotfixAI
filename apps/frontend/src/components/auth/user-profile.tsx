@@ -3,55 +3,22 @@
  */
 'use client'
 
-import { useEffect, useState } from 'react'
-import { authService } from '@/lib/auth/auth-service'
+import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import type { User } from '@supabase/supabase-js'
 
 export function UserProfile() {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
+  const { data: session, status } = useSession()
   const router = useRouter()
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { user, error } = await authService.getCurrentUser()
-      if (error) {
-        console.error('Error fetching user:', error)
-      } else {
-        setUser(user)
-      }
-      setLoading(false)
-    }
-
-    fetchUser()
-
-    // 세션 변경 감지
-    const { data: { subscription } } = authService.onAuthStateChange((event, session) => {
-      if (session?.user) {
-        setUser(session.user)
-      } else {
-        setUser(null)
-      }
-    })
-
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [])
-
   const handleLogout = async () => {
-    const { error } = await authService.signOut()
-    if (!error) {
-      router.push('/')
-    }
+    await signOut({ callbackUrl: '/' })
   }
 
-  if (loading) {
+  if (status === 'loading') {
     return <div>로딩 중...</div>
   }
 
-  if (!user) {
+  if (!session?.user) {
     return (
       <div>
         <a href="/auth/login" className="text-blue-500 hover:underline">
@@ -64,8 +31,8 @@ export function UserProfile() {
   return (
     <div className="flex items-center gap-4">
       <div>
-        <p className="font-semibold">{user.email}</p>
-        <p className="text-sm text-gray-500">{user.id}</p>
+        <p className="font-semibold">{session.user.email}</p>
+        <p className="text-sm text-gray-500">{session.user.id}</p>
       </div>
       <button
         onClick={handleLogout}
