@@ -1,0 +1,22 @@
+{
+  "name": "hotfixai",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "yarn workspace frontend dev",
+    "build": "yarn workspace frontend build",
+    "start": "yarn workspace frontend start",
+    "lint": "yarn workspace frontend lint",
+    "prisma:generate": "yarn workspace frontend prisma:generate",
+    "prisma:push": "yarn workspace frontend prisma:push",
+    "prisma:studio": "yarn workspace frontend prisma:studio"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "packageManager": "yarn@1.22.19"
+}
+
